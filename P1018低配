@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+int m,n;
+string str;
+const int maxx=42;
+int dp[maxx][maxx];
+int num[maxx][maxx];
+int main() {
+	cin>>m>>n;
+	cin>>str;
+	str=' '+str;
+	for(int i=1;i<=m;i++){
+		for(int j=i;j<=m;j++){
+			num[i][j]=num[i][j-1]*10+str[j]-'0';
+		}
+	}
+	memset(dp,0,sizeof(dp));
+	for(int i=1;i<=m;i++){
+		dp[i][0]=num[1][i];
+	}
+	for(int i=1;i<=m;i++){
+		for(int j=1;j<=n;i++){
+			if(j>=i){
+				break;
+			}
+			for(int k=j;k<i;k++){
+				dp[i][j]=max(dp[i][j],dp[k][j-1]*num[j][i]);
+			}
+		}
+	}
+	cout<<dp[m][n]<<endl;
+	return 0;
+}
